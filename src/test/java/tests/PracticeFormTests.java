@@ -4,39 +4,37 @@ import org.junit.jupiter.api.Test;
 import pages.PracticeFormPage;
 
 public class PracticeFormTests extends TestBase {
-
     PracticeFormPage practiceFormPage = new PracticeFormPage();
 
     @Test
     void fillAllFieldsTest() {
+
         practiceFormPage.openPage()
                 .removeBanners()
-                .setFirstName("Ekaterina")
-                .setLastName("Vodolazhskaia")
-                .setEmail("testmail@gmail.com")
-                .setGender("Female")
-                .setUserNumber("1234567890")
-                .setDateOfBirth("27", "June", "1993")
-                .setSubjects("Maths")
-                .setSubjects("Physics")
-                .setHobbies("Reading")
-                .setHobbies("Music")
-                .uploadPicture("picture.png")
-                .setCurrentAddress("Moscow, Russia")
-                .setState("NCR")
-                .setCity("Gurgaon")
+                .setFirstName(data.firstName)
+                .setLastName(data.lastName)
+                .setEmail(data.email)
+                .setGender(data.gender)
+                .setUserNumber(data.userNumber)
+                .setDateOfBirth(data.userBirthDay, data.userBirthMonth, data.userBirthYear)
+                .setSubjects(data.subject)
+                .setHobbies(data.hobby)
+                .uploadPicture(data.picture)
+                .setCurrentAddress(data.currentAddress)
+                .setState(data.state)
+                .setCity(data.city)
                 .submit()
 
-                .checkResult("Student Name", "Ekaterina Vodolazhskaia")
-                .checkResult("Student Email", "testmail@gmail.com")
-                .checkResult("Gender", "Female")
-                .checkResult("Mobile", "1234567890")
-                .checkResult("Date of Birth", "27 June,1993")
-                .checkResult("Subjects", "Maths, Physics")
-                .checkResult("Hobbies", "Reading, Music")
-                .checkResult("Picture", "picture.png")
-                .checkResult("Address", "Moscow, Russia")
-                .checkResult("State and City", "NCR Gurgaon");
+                .checkResult("Student Name", data.firstName + " " + data.lastName)
+                .checkResult("Student Email", data.email)
+                .checkResult("Gender", data.gender)
+                .checkResult("Mobile", data.userNumber)
+                .checkResult("Date of Birth", data.userBirthDay + " " + data.userBirthMonth + "," + data.userBirthYear)
+                .checkResult("Subjects", data.subject)
+                .checkResult("Hobbies", data.hobby)
+                .checkResult("Picture", data.picture)
+                .checkResult("Address", data.currentAddress)
+                .checkResult("State and City", data.state + " " + data.city);
 
     }
 
@@ -44,27 +42,27 @@ public class PracticeFormTests extends TestBase {
     void fillOnlyRequiredFieldsTest() {
         practiceFormPage.openPage()
                 .removeBanners()
-                .setFirstName("Ivan")
-                .setLastName("Petrov")
-                .setGender("Male")
-                .setUserNumber("0000000000")
-                .setDateOfBirth("13", "May", "1980")
+                .setFirstName(data.firstName)
+                .setLastName(data.lastName)
+                .setGender(data.gender)
+                .setUserNumber(data.userNumber)
+                .setDateOfBirth(data.userBirthDay, data.userBirthMonth, data.userBirthYear)
                 .submit()
 
-                .checkResult("Student Name", "Ivan Petrov")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "0000000000")
-                .checkResult("Date of Birth", "13 May,1980");
+                .checkResult("Student Name", data.firstName + " " + data.lastName)
+                .checkResult("Gender", data.gender)
+                .checkResult("Mobile", data.userNumber)
+                .checkResult("Date of Birth", data.userBirthDay + " " + data.userBirthMonth + "," + data.userBirthYear);
     }
 
     @Test
     void emptyFirstNameTest() {
         practiceFormPage.openPage()
                 .removeBanners()
-                .setLastName("Ivanov")
-                .setGender("Other")
-                .setUserNumber("1111111111")
-                .setDateOfBirth("31", "January", "1999")
+                .setLastName(data.lastName)
+                .setGender(data.gender)
+                .setUserNumber(data.userNumber)
+                .setDateOfBirth(data.userBirthDay, data.userBirthMonth, data.userBirthYear)
                 .submit()
 
                 .checkEmptyFirstNameResult();
